@@ -165,6 +165,87 @@ Our main inspiration is a visualisation of the digital humanities academic commu
 
 **10% of the final grade**
 
+### Prototype
+
+**Live prototype:** [https://thesocialgraph.vercel.app](https://thesocialgraph.vercel.app)
+
+### What Is Implemented
+
+- Ego network SVG/D3 graph with ring layout, hover states, click-to-focus
+- Bridge list panel (top 8 bridge friends by bridge count)
+- Candidate list panel (ranked by score, top-N slider)
+- Candidate detail panel (bridge path explanation, shared traits)
+- Attribute filters: same country, same age group (live)
+- Planned filter slot: music taste (disabled, labeled as planned)
+- AND/OR filter mode toggle
+- Stage metrics strip (direct count, two-hop pool, visible count, active focus)
+- Storyline cards (A/B/C narrative)
+- Hero overview strip (dataset stats)
+- Atlas section with six charts
+- Responsive layout (down to 780 px)
+- Smooth hover transitions and graph interaction states
+
+### What Is Not Yet Implemented (Honest Scope Boundary)
+
+- **Music-taste filtering:** requires a user-to-artist listening table that is not present in the local workspace. The ArtistTags and ArtistsMap files contain artist metadata but no per-user listening records. This is documented in the prototype as a planned next step. Once a user-level listening table is available, tag-overlap scoring between ego and candidate can power the filter — the UI slot is already present and labeled "coming soon".
+- **D3 force-directed animation:** the current graph uses a static ring layout. D3 force simulation with animated transitions is the next planned upgrade (stretch goal B). The envisioned behaviour is an animated progressive reveal: ego appears → bridge ring grows in → candidate ring expands outward, making the "one hop" story kinetic.
+- **Screencast, process book, final README:** these are Milestone 3 items.
+
+### Data Notes
+
+- **Primary dataset:** Last.fm UK User Graph, Zenodo 10.5281/zenodo.10694369
+- 75,969 connected users, 389,639 unique undirected friendships
+- Median direct-friend degree: 5
+- Median second-degree reach: 166 (33× expansion in one hop)
+- 5 exemplar ego users selected for diverse, readable scenarios
+- ArtistTags (246 MB) is excluded from git — too large for GitHub. It is available in the local workspace for future music-taste work.
+
+### Tools and Lectures per Visualization
+
+| Visualization / Feature | Tools | Relevant Lectures |
+|-------------------------|-------|-------------------|
+| Ego-centric ring graph (SVG node-link diagram) | D3.js (SVG, selections, data joins), vanilla JS | 4.2 — D3, 5.2 — Interactive D3, 10 — Graph Visualization |
+| Hover states, click-to-focus, graph interaction | D3 event listeners, CSS transitions | 5.1 — Interactions & Views, 5.2 — Interactive D3 |
+| Bridge list & candidate list panels | D3 data joins, DOM manipulation | 4.1 — Data, 4.2 — D3 |
+| Candidate detail panel (path explanation, shared traits) | Vanilla JS, HTML templates | 12.1 — Storytelling |
+| Attribute filters (country, age group, AND/OR toggle) | Vanilla JS, D3 re-rendering | 5.1 — Interactions & Views |
+| Top-N slider | HTML range input, D3 re-rendering | 5.1 — Interactions & Views, 5.2 — Interactive D3 |
+| Stage metrics strip | HTML/CSS, computed from filtered data | 6.2 — Mark and Channels |
+| Atlas section (6 exploratory charts) | D3.js (bar charts, distributions) | 4.1 — Data, 6.2 — Mark and Channels, 11.1 — Tabular Data |
+| Storyline narrative cards (A/B/C scenarios) | HTML/CSS | 12.1 — Storytelling |
+| Hero overview strip (dataset stats) | HTML/CSS | 7.1 — Designing Viz |
+| Color scheme and visual encoding | CSS custom properties | 6.1 — Perception & Color, 6.2 — Mark and Channels |
+| Responsive layout | CSS media queries, flexbox/grid | 7.1 — Designing Viz, 7.2 — Do's and Don'ts |
+| Music-taste filter (planned) | D3.js, data pipeline TBD | 11.2 — Music / Sound Visualization |
+| D3 force-directed animation (planned) | D3-force module | 10 — Graph Visualization, 5.2 — Interactive D3 |
+| Deployment | Vercel (static hosting, CLI) | — |
+
+### Independent Pieces and MVP Breakdown
+
+#### Core Visualization (MVP — required)
+
+| Piece | Status |
+|-------|--------|
+| Ego-centric ring graph (ego → bridges → candidates) | Done |
+| Bridge friend ranking panel | Done |
+| Candidate ranking panel with top-N slider | Done |
+| Country and age-group attribute filters with AND/OR toggle | Done |
+| Candidate detail panel (path explanation, shared traits) | Done |
+| Stage metrics strip | Done |
+| Responsive layout | Done |
+
+#### Extra Ideas (enhancements — can be dropped without endangering the project)
+
+| Idea | Description | Status |
+|------|-------------|--------|
+| A. Music-taste filter | Compute tag overlap between ego and candidate once a user-level listening table is available. The filter UI slot is already present and labeled "coming soon". | Planned — blocked on data |
+| B. Animated progressive reveal | Instead of showing all nodes at once, animate the expansion: ego → bridge ring → candidate ring. Makes the "one hop" story kinetic. | Planned — stretch goal |
+| C. Force-layout drag | Let the user physically pull nodes to inspect overlapping connections. D3 drag behavior is already wired in the prototype. | Partially wired |
+| D. AND/OR compound filter builder | Replace the simple toggle with a visual rule builder for queries like "same country AND (same age OR music match)". | Planned |
+| E. Community-aware coloring | Run a lightweight Louvain partition on the ego's local subgraph and color bridge nodes by community. | Planned |
+| F. Animated storytelling mode | A self-running guided tour (A → B → C) with step-by-step annotation overlays, useful for the Milestone 3 screencast. | Planned |
+| G. Mobile-first layout | The current responsive CSS handles viewports down to 780 px, but the force graph needs a smaller canvas and touch-friendly drag for phones. | Planned |
+
 
 ## Milestone 3 (29th May, 5pm)
 
